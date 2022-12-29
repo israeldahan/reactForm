@@ -1,11 +1,11 @@
 import './App.css';
-import LoginFormCheckBox from './components/LoginFormCheckBox';
+import LoginFormShort from './components/LoginFormShort';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <LoginFormCheckBox/>
+        <LoginFormShort/>
       </header>
     </div>
   );

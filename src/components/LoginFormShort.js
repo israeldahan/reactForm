@@ -4,7 +4,12 @@ import * as yup from 'yup';
 const INITIAL_VALUES = {
     email: '',
     password: '',
-    city: ''
+    city: '',
+    checkboxColor: {
+      green: false,
+      blue: false
+    },
+    selectOption : 'option1'
   }
 
 let schema = yup.object().shape({
@@ -15,11 +20,7 @@ let schema = yup.object().shape({
   
 const LoginFormShort = () => {
 
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-    city: ''
-  })
+  const [form, setForm] = useState(INITIAL_VALUES)
   
   const handleSubmit = async (event) => {
       event.preventDefault()
@@ -36,10 +37,25 @@ const LoginFormShort = () => {
   }
 
   const handleChange = (event) => {
-    setForm({
+    if (event.target.type == 'checkbox'){
+      setForm({
+        ...form,
+        checkboxColor :{
+          ...form.checkboxColor,  
+          [event.target.id]: !form.checkboxColor[event.target.id]}    
+    }) } else if (event.target.type == 'radio'){
+      setForm({
+        ...form,
+        [event.target.name]: event.target.value
+    })
+
+    }else {
+      setForm({
         ...form,
         [event.target.id]: event.target.value
     })
+    }
+    
   }
 
   const handleReset = () => {
@@ -75,9 +91,57 @@ const LoginFormShort = () => {
         onChange={handleChange}
         />
       </div>
+      <div>
+            <label >
+                <input
+                    id="blue"
+                    name="checkboxColor"
+                    type="checkbox"
+                    checked={form.checkboxColor.blue}
+                    onChange={handleChange}
+                />
+                Blue
+                </label>
+                <label>
+                <input
+                    id="green"
+                    name="checkboxColor"
+                    type="checkbox"
+                    checked={form.checkboxColor.green}
+                    onChange={handleChange}
+                />
+                Green
+            </label>
+        </div>
+
+        <div className="radio">
+      <label>
+        <input type="radio" value="option1" name='selectOption'
+                      checked={form.selectOption === 'option1'} 
+                      onChange={handleChange} />
+        Option 1
+      </label>
+    </div>
+    <div className="radio">
+      <label>
+        <input type="radio" value="option2"  name='selectOption'
+                      checked={form.selectOption === 'option2'} 
+                      onChange={handleChange} />
+        Option 2
+      </label>
+    </div>
+    <div className="radio">
+      <label>
+        <input type="radio" value="option3" name='selectOption'
+                      checked={form.selectOption === 'option3'} 
+                      onChange={handleChange} />
+        Option 3
+      </label>
+    </div>
+
 
       <button type="submit">Submit</button>
-      <a onClick={handleReset} > RESET </a>
+      <a onClick={handleReset} href=""> RESET </a>
     </form>
   );
 };
